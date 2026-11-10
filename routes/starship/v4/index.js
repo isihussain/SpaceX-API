@@ -71,4 +71,3 @@ router.delete('/:id', auth, authz('starship:delete'), async (ctx) => {
 });
 
 export default router;
-
