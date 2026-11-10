@@ -111,4 +111,3 @@ describe('Transform Query Helper', () => {
     expect(result.options.populate[1].path).toBe('payloads');
   });
 });
-
