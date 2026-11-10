@@ -74,4 +74,3 @@ try {
   };
   logger.error(formatted);
 }
-
