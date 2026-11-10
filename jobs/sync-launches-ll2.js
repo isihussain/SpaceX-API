@@ -1,3 +1,6 @@
+/* eslint-disable no-continue */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
 import got from 'got';
 import moment from 'moment-timezone';
 import logger from '../middleware/logger.js';
@@ -97,4 +100,3 @@ export default async () => {
     logger.error(formatted);
   }
 };
-
