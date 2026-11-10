@@ -13,9 +13,11 @@ const FOLDERS = await Promise.all([
   import('./launches/index.js'),
   import('./launchpads/index.js'),
   import('./payloads/index.js'),
+  import('./raptors/index.js'),
   import('./roadster/index.js'),
   import('./rockets/index.js'),
   import('./ships/index.js'),
+  import('./starship/index.js'),
   import('./starlink/index.js'),
   import('./users/index.js'),
 ]);
