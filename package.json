@@ -5,7 +5,7 @@
     "main":  "server.js",
     "type":  "module",
     "scripts":  {
-                    "test":  "npm run lint \u0026\u0026 npm run check-dependencies \u0026\u0026 node --experimental-vm-modules node_modules/jest/bin/jest.js --silent --verbose",
+                    "test":  "npm run lint \u0026\u0026 npm run check-dependencies \u0026\u0026 node --experimental-vm-modules node_modules/jest/bin/jest.js --silent --verbose --forceExit",
                     "start":  "node server.js",
                     "worker":  "node jobs/worker.js",
                     "lint":  "eslint .",
