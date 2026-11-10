@@ -7,7 +7,7 @@ The default body for `/query` routes is:
 ```json
 {
   "query": {},
-  "options": {},
+  "options": {}
 }
 ```
 

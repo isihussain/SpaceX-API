@@ -43,7 +43,7 @@
     "type": "Number",
     "default": null
   },
-  "tdb": {
+  "tbd": {
     "type": "Boolean",
     "default": false
   },
@@ -227,6 +227,10 @@
   "auto_update": {
     "type": "Boolean",
     "default": true
+  },
+  "launch_library_id": {
+    "type": "String",
+    "default": null
   }
 }
 ```
