@@ -71,4 +71,3 @@ router.delete('/:id', auth, authz('raptors:delete'), async (ctx) => {
 });
 
 export default router;
-
