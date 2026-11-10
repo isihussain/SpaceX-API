@@ -2,7 +2,7 @@ import got from 'got';
 import * as fuzz from 'fuzzball';
 import Parser from 'rss-parser';
 import { fail, success } from '../lib/healthchecks/index.js';
-import { logger } from '../middleware/index.js';
+import logger from '../middleware/logger.js';
 
 const YOUTUBE_PREFIX = 'https://youtu.be';
 const CHANNEL_ID = 'UCtI0Hodo5o5dUb67FeUjDeA';
