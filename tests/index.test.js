@@ -2,6 +2,7 @@ import { parseYoutubeId } from '../jobs/webcast.js';
 import { DEFAULT_PORT, HEALTHCHECK_PREFIX } from '../lib/constants.js';
 import transformQuery from '../routes/launches/v4/_transform-query.js';
 import { fail, start, success } from '../lib/healthchecks/index.js';
+import { Raptor, Starship } from '../models/index.js';
 
 describe('Sanity & Configuration Tests', () => {
   it('should expect true to be true', () => {
@@ -11,6 +12,38 @@ describe('Sanity & Configuration Tests', () => {
   it('should have valid default constants', () => {
     expect(DEFAULT_PORT).toBe(6673);
     expect(HEALTHCHECK_PREFIX).toBe('https://hc-ping.com');
+  });
+});
+
+describe('Raptor Engine Model & Schema (#1112)', () => {
+  it('should register Raptor model in mongoose', () => {
+    expect(Raptor.modelName).toBe('Raptor');
+  });
+
+  it('should declare all required Raptor specification paths', () => {
+    const paths = Object.keys(Raptor.schema.paths);
+    expect(paths).toContain('name');
+    expect(paths).toContain('version');
+    expect(paths).toContain('type');
+    expect(paths).toContain('status');
+    expect(paths).toContain('chamber_pressure_bar');
+    expect(paths).toContain('dry_weight_kg');
+  });
+});
+
+describe('Starship Flight Timeline Model & Schema (#462)', () => {
+  it('should register Starship model in mongoose', () => {
+    expect(Starship.modelName).toBe('Starship');
+  });
+
+  it('should declare all required Starship test paths', () => {
+    const paths = Object.keys(Starship.schema.paths);
+    expect(paths).toContain('flight_number');
+    expect(paths).toContain('name');
+    expect(paths).toContain('type');
+    expect(paths).toContain('hot_staging');
+    expect(paths).toContain('booster_recovery');
+    expect(paths).toContain('ship_recovery');
   });
 });
 
@@ -78,3 +111,4 @@ describe('Transform Query Helper', () => {
     expect(result.options.populate[1].path).toBe('payloads');
   });
 });
+
