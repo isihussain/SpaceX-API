@@ -85,4 +85,3 @@ raptorSchema.plugin(idPlugin);
 const Raptor = mongoose.model('Raptor', raptorSchema);
 
 export default Raptor;
-
