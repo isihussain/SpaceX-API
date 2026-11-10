@@ -1,4 +1,4 @@
-﻿import http from 'http';
+import http from 'http';
 import mongoose from 'mongoose';
 import logger from './middleware/logger.js';
 import { DEFAULT_PORT } from './lib/constants.js';
@@ -9,7 +9,7 @@ const SERVER = http.createServer(app.callback());
 
 // Gracefully close Mongo connection
 const gracefulShutdown = (msg, code = 0) => {
-  logger.info(Shutdown initiated: );
+  logger.info(`Shutdown initiated: ${msg}`);
   mongoose.connection.close(false, () => {
     logger.info('Mongo closed');
     SERVER.close(() => {
@@ -21,7 +21,7 @@ const gracefulShutdown = (msg, code = 0) => {
 
 // Server start
 SERVER.listen(PORT, '0.0.0.0', () => {
-  logger.info(Running on port: );
+  logger.info(`Running on port: ${PORT}`);
 
   // Handle kill commands
   process.on('SIGTERM', () => gracefulShutdown('SIGTERM', 0));
