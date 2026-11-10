@@ -1,4 +1,4 @@
-import got from 'got';
+﻿import got from 'got';
 import * as fuzz from 'fuzzball';
 import Parser from 'rss-parser';
 import { fail, success } from '../lib/healthchecks/index.js';
@@ -11,6 +11,18 @@ const {
   WEBCAST_HEALTHCHECK,
   SPACEX_API: API,
 } = process.env;
+
+/**
+ * Extract 11-character YouTube video ID from various URL formats
+ *
+ * @param {string} url - YouTube URL
+ * @returns {string|null} 11-char YouTube ID or null
+ */
+export const parseYoutubeId = (url) => {
+  if (!url || typeof url !== 'string') return null;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  return match ? match[1] : null;
+};
 
 /**
  * Check for new SpaceX webcast links
@@ -26,9 +38,18 @@ export default async () => {
       resolveBodyOnly: true,
     });
     const result = await parser.parseString(rssResult);
+    if (!result?.items?.length) {
+      logger.info({ name: 'webcast', message: 'No items in YouTube RSS feed' });
+      return;
+    }
     const latest = result.items[0];
     const rssTitle = latest.title;
-    const rssYoutubeId = latest.link.split('v=')[1];
+    const rssYoutubeId = parseYoutubeId(latest.link);
+
+    if (!rssYoutubeId) {
+      logger.warn({ name: 'webcast', message: `Could not parse YouTube ID from link: ${latest.link}` });
+      return;
+    }
 
     const launches = await got.post(`${API}/launches/query`, {
       json: {
@@ -45,6 +66,12 @@ export default async () => {
       resolveBodyOnly: true,
       responseType: 'json',
     });
+
+    if (!launches?.docs?.length) {
+      logger.info({ name: 'webcast', message: 'No upcoming launches found to update' });
+      return;
+    }
+
     const launchId = launches.docs[0].id;
     const missionName = launches.docs[0].name;
 
@@ -67,7 +94,7 @@ export default async () => {
         resolveBodyOnly: true,
         responseType: 'json',
       });
-      const pastYoutubeId = pastLaunches.docs[0].links.youtube_id;
+      const pastYoutubeId = pastLaunches?.docs?.[0]?.links?.youtube_id;
       if (rssYoutubeId !== pastYoutubeId) {
         await got.patch(`${API}/launches/${launchId}`, {
           json: {
