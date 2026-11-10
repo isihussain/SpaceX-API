@@ -78,4 +78,3 @@ starshipSchema.plugin(idPlugin);
 const Starship = mongoose.model('Starship', starshipSchema);
 
 export default Starship;
-
