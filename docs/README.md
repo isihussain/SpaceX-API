@@ -92,4 +92,8 @@ Includes raw orbit data from [Space Track](https://www.space-track.org/auth/logi
 
 Space Track data adheres to the standard for [Orbit Data Messages](https://public.ccsds.org/Pubs/502x0b2c1e2.pdf)
 
+### [Raptors](raptors/v4/schema.md) - Detailed specifications for SpaceX Raptor engines (Raptor 1, Raptor 2, Raptor 3)
+
+### [Starship](starship/v4/schema.md) - Flight timeline for Starship tests and Integrated Flight Tests (IFT-1 to IFT-6+)
+
 ### [History](history) - Detailed info on SpaceX historical events
