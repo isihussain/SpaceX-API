@@ -3,7 +3,7 @@
 <h1 align="center">SpaceX REST API (Community Fork)</h1>
 
 <h3 align="center">
-Open Source REST API for launch, rocket, core, capsule, starlink, launchpad, and landing pad data.
+Open Source REST API for launch, rocket, core, capsule, starlink, raptor, starship, launchpad, and landing pad data.
 </h3>
 
 <p align="center">
@@ -14,7 +14,7 @@ Open Source REST API for launch, rocket, core, capsule, starlink, launchpad, and
 </p>
 
 > [!NOTE]
-> **Community Modernization Fork**: Upstream `r-spacex/SpaceX-API` was archived in read-only mode. This repository (`isihussain/SpaceX-API`) is actively maintained by the community with bug fixes, Node 20 LTS runtime support, modernized background sync jobs, expanded test coverage, and upcoming Starship & Raptor engine endpoints.
+> **Community Modernization Fork**: Upstream `r-spacex/SpaceX-API` was archived in read-only mode. This repository (`isihussain/SpaceX-API`) is actively maintained by the community with bug fixes, Node 20 LTS runtime support, modernized background sync jobs, expanded test coverage, and newly added Starship & Raptor engine endpoints.
 
 <h4 align="center">
   <i>
@@ -29,13 +29,15 @@ Open Source REST API for launch, rocket, core, capsule, starlink, launchpad, and
 
 ## Recent Improvements & Resolved Upstream Issues
 
+- **Raptor Engines Endpoint (#1112)**: Added `/v4/raptors` providing comprehensive engineering specifications for Raptor 1, Raptor 2, and Raptor 3 engines (thrust, chamber pressure, specific impulse, dry weight, propellants).
+- **Starship Flight Timeline (#462, #1371)**: Added `/v4/starship` tracking suborbital prototype hops (SN8–SN15) and Integrated Flight Tests (IFT-1 through IFT-6+).
+- **Modern Launch Library 2 Sync Job**: Added `jobs/sync-launches-ll2.js` to ingest SpaceX flights and Starship tests directly from The Space Devs REST API, replacing broken HTML scraping.
 - **Schema Consistency (#1368)**: Corrected `tdb` typo to `tbd` in launch schemas and examples, and documented `launch_library_id`.
 - **Server Resilience (#1346)**: Structured uncaught exception and rejection logging with full stack traces, ensuring container orchestrators (Kubernetes/Docker) trigger restarts on exit code 1.
 - **Robust Webcast ID Parsing (#1350)**: Fixed YouTube video ID extraction to handle short URLs, parameters, and empty queries.
-- **Unit Test Coverage (#1354)**: Comprehensive Jest test suite added covering parser edge cases, constants, healthcheck guards, and query transforms.
+- **Unit Test Coverage (#1354)**: Comprehensive Jest test suite added covering parser edge cases, constants, healthcheck guards, query transforms, and model definitions.
 - **Runtime & Container Hardening**: Upgraded runtime to Node.js 20 LTS and Docker image to `node:20-alpine`.
 - **Automated CI**: GitHub Actions workflow covering Node 18 & Node 20 matrices.
-- **Launch Library 2 Sync Modernization**: Added defensive guards and custom User-Agent to prevent rate-limit rejections.
 
 ## Usage
 
@@ -118,6 +120,19 @@ GET https://api.spacexdata.com/v5/launches/latest
   "id": "5eb87d46ffd86e000604b388"
 }
 ```
+
+## Available Endpoints
+
+- `GET /v4/raptors` - List all SpaceX Raptor rocket engines
+- `GET /v4/raptors/:id` - Get specific Raptor engine specifications
+- `POST /v4/raptors/query` - Paginated queries for Raptor engines
+- `GET /v4/starship` - List Starship suborbital hops and orbital flight tests
+- `GET /v4/starship/:id` - Get specific Starship flight test details
+- `POST /v4/starship/query` - Paginated queries for Starship flight timeline
+- `GET /v5/launches` - List all launches
+- `GET /v4/rockets` - List rocket specs
+- `GET /v4/capsules` - List Dragon capsule statuses
+- `GET /v4/starlink` - List Starlink constellation data
 
 ## Local Development
 
