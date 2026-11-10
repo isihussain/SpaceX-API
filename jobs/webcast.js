@@ -1,4 +1,4 @@
-﻿import got from 'got';
+import got from 'got';
 import * as fuzz from 'fuzzball';
 import Parser from 'rss-parser';
 import { fail, success } from '../lib/healthchecks/index.js';
@@ -20,7 +20,8 @@ const {
  */
 export const parseYoutubeId = (url) => {
   if (!url || typeof url !== 'string') return null;
-  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  const regex = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/;
+  const match = url.match(regex);
   return match ? match[1] : null;
 };
 
@@ -47,7 +48,10 @@ export default async () => {
     const rssYoutubeId = parseYoutubeId(latest.link);
 
     if (!rssYoutubeId) {
-      logger.warn({ name: 'webcast', message: `Could not parse YouTube ID from link: ${latest.link}` });
+      logger.warn({
+        name: 'webcast',
+        message: `Could not parse YouTube ID from link: ${latest.link}`,
+      });
       return;
     }
 
