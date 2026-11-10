@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 import dotenv from 'dotenv';
-import { logger } from '../middleware/index.js';
+import logger from '../middleware/logger.js';
 import launches from './launches.js';
 import payloads from './payloads.js';
 import landpads from './landpads.js';
@@ -12,6 +12,7 @@ import upcoming from './upcoming.js';
 import starlink from './starlink.js';
 import webcast from './webcast.js';
 import launchLibrary from './launch-library.js';
+import syncLaunchesLl2 from './sync-launches-ll2.js';
 
 // Env init
 dotenv.config();
@@ -49,6 +50,9 @@ const webcastJob = new CronJob('*/5 * * * *', webcast);
 // Every hour on :45
 const launchLibraryJob = new CronJob('45 * * * *', launchLibrary);
 
+// Every 30 minutes
+const syncLaunchesLl2Job = new CronJob('*/30 * * * *', syncLaunchesLl2);
+
 try {
   launchesJob.start();
   payloadsJob.start();
@@ -61,6 +65,7 @@ try {
   starlinkJob.start();
   webcastJob.start();
   launchLibraryJob.start();
+  syncLaunchesLl2Job.start();
 } catch (error) {
   const formatted = {
     name: 'worker',
@@ -69,3 +74,4 @@ try {
   };
   logger.error(formatted);
 }
+
