@@ -1,4 +1,4 @@
-﻿import { parseYoutubeId } from '../jobs/webcast.js';
+import { parseYoutubeId } from '../jobs/webcast.js';
 import { DEFAULT_PORT, HEALTHCHECK_PREFIX } from '../lib/constants.js';
 import transformQuery from '../routes/launches/v4/_transform-query.js';
 import { fail, start, success } from '../lib/healthchecks/index.js';
@@ -20,7 +20,8 @@ describe('Webcast YouTube ID Parser', () => {
   });
 
   it('should extract ID from watch URL with additional query parameters', () => {
-    expect(parseYoutubeId('https://www.youtube.com/watch?v=21X5lGlDOfg&feature=channel')).toBe('21X5lGlDOfg');
+    const url = 'https://www.youtube.com/watch?v=21X5lGlDOfg&feature=channel';
+    expect(parseYoutubeId(url)).toBe('21X5lGlDOfg');
   });
 
   it('should extract ID from short youtu.be URL', () => {
